@@ -14,9 +14,11 @@ class AdvicerBloc extends Bloc<AdvicerEvent, AdvicerState> {
     on<AdviceRequestedEvent>((event, emit) async {
       emit(AdvicerStateLoading());
 
-      AdviceEntity advice = await adviceUseCases.getAdvice();
+      final failureOrAdvice = await adviceUseCases.getAdvice();
 
-      emit(AdvicerStateLoaded(advice: advice.advice));
+      failureOrAdvice.fold(
+          (failure) => emit(AdvicerStateError(message: 'error message')),
+          (advice) => emit(AdvicerStateLoaded(advice: advice.advice)));
     });
   }
 }
