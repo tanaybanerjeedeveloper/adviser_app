@@ -7,6 +7,6 @@ class AdviceUseCases {
   Future<Either<Failure, AdviceEntity>> getAdvice() async {
     await Future.delayed(const Duration(seconds: 3), () {});
     //return right(AdviceEntity(advice: 'advice to test', id: 1));
-    return left(ServerError());
+    return left(CacheError());
   }
 }
